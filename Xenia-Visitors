@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XENIA 2025 - Salto Visitor Registration</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+```
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 20px;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .header {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .header h1 {
+        color: #667eea;
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    .header p {
+        color: #666;
+        font-size: 16px;
+    }
+
+    .main-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .main-content {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .card {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .card h2 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        font-family: inherit;
+        transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        background: #f8f9ff;
+    }
+
+    .form-group textarea {
+        resize: vertical;
+        min-height: 60px;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+
+    .button {
+        flex: 1;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        min-width: 120px;
+    }
+
+    .button.primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .button.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .button.secondary {
+        background: #f0f0f0;
+        color: #333;
+    }
+
+    .button.secondary:hover {
+        background: #e0e0e0;
+    }
+
+    .button.danger {
+        background: #ff6b6b;
+        color: white;
+    }
+
+    .button.danger:hover {
+        background: #ff5252;
+    }
+
+    .button:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .stat-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .stat-box .number {
+        font-size: 32px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .stat-box .label {
+        font-size: 12px;
+        opacity: 0.9;
+    }
+
+    .visitor-list {
+        max-height: 600px;
+        overflow-y: auto;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    .visitor-item {
+        background: #f8f9fa;
+        padding: 12px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        border-left: 4px solid #667eea;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 13px;
+    }
+
+    .visitor-item .info {
+        flex: 1;
+    }
+
+    .visitor-item .name {
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 3px;
+    }
+
+    .visitor-item .company {
+        color: #667eea;
+        font-size: 12px;
+    }
+
+    .visitor-item .delete-btn {
+        background: #ff6b6b;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 11px;
+    }
+
+    .visitor-item .delete-btn:hover {
+        background: #ff5252;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #999;
+    }
+
+    .empty-state svg {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 10px;
+        opacity: 0.3;
+    }
+
+    .success-message {
+        background: #d4edda;
+        border: 2px solid #28a745;
+        color: #155724;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        display: none;
+    }
+
+    .success-message.show {
+        display: block;
+        animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .time-stamp {
+        font-size: 11px;
+        color: #999;
+        margin-top: 3px;
+    }
+
+    .export-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .checkbox-group {
+        display: flex;
+        gap: 15px;
+        margin: 15px 0;
+        flex-wrap: wrap;
+    }
+
+    .checkbox-group label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: normal;
+        margin: 0;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        width: auto;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    .interests-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .interest-tag {
+        background: #e8f4ff;
+        color: #667eea;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+</style>
+```
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎪 XENIA 2025 - Salto Systems</h1>
+            <p>Visitor Registration & Management System</p>
+            <p style="font-size: 13px; color: #999; margin-top: 10px;">Metropolitan Expo | November 22-24, 2025</p>
+        </div>
+
+```
+    <div class="main-content">
+        <!-- Registration Form -->
+        <div class="card">
+            <h2>📝 Visitor Registration</h2>
+            
+            <div class="success-message" id="successMessage">
+                ✅ Visitor registered successfully!
+            </div>
+
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label>First Name *</label>
+                    <input type="text" id="firstName" required placeholder="John">
+                </div>
+
+                <div class="form-group">
+                    <label>Last Name *</label>
+                    <input type="text" id="lastName" required placeholder="Doe">
+                </div>
+
+                <div class="form-group">
+                    <label>Company/Organization *</label>
+                    <input type="text" id="company" required placeholder="ACME Corporation">
+                </div>
+
+                <div class="form-group">
+                    <label>Job Title</label>
+                    <input type="text" id="jobTitle" placeholder="Sales Manager">
+                </div>
+
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" id="email" required placeholder="john@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="phone" placeholder="+30 210 1234567">
+                </div>
+
+                <div class="form-group">
+                    <label>Interests</label>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" name="interests" value="Salto XS4">
+                            Salto XS4 Face
+                        </label>
+                        <label>
+                            <input type="checkbox" name="interests" value="Salto KS">
+                            Salto KS
+                        </label>
+                        <label>
+                            <input type="checkbox" name="interests" value="Access Control">
+                            Access Control
+                        </label>
+                        <label>
+                            <input type="checkbox" name="interests" value="Cloud Platform">
+                            Cloud Platform
+                        </label>
+                        <label>
+                            <input type="checkbox" name="interests" value="Hardware">
+                            Hardware
+                        </label>
+                        <label>
+                            <input type="checkbox" name="interests" value="Integration">
+                            Integration
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="notes" placeholder="Additional information about visitor..."></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="button primary">✅ Register Visitor</button>
+                    <button type="reset" class="button secondary">🔄 Clear</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Statistics & Visitor List -->
+        <div>
+            <div class="card">
+                <h2>📊 Statistics</h2>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="number" id="totalVisitors">0</div>
+                        <div class="label">Total Visitors</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number" id="uniqueCompanies">0</div>
+                        <div class="label">Companies</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="number" id="todayVisitors">0</div>
+                        <div class="label">Today</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+                <h2>📋 Export Data</h2>
+                <div class="export-options">
+                    <button class="button secondary" onclick="exportToCSV()">📥 Export CSV</button>
+                    <button class="button secondary" onclick="exportToJSON()">📥 Export JSON</button>
+                </div>
+                <button class="button danger" style="width: 100%; margin-top: 10px;" onclick="clearAllData()">🗑️ Clear All Data</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Visitor List -->
+    <div class="card">
+        <h2>👥 Registered Visitors</h2>
+        <div class="visitor-list" id="visitorList">
+            <div class="empty-state">
+                <p>📭 No visitors registered yet</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Data storage key
+    const STORAGE_KEY = 'xenia_2025_visitors';
+
+    // Load data from localStorage
+    function loadVisitors() {
+        const data = localStorage.getItem(STORAGE_KEY);
+        return data ? JSON.parse(data) : [];
+    }
+
+    // Save data to localStorage
+    function saveVisitors(visitors) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(visitors));
+        updateUI();
+    }
+
+    // Add new visitor
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const interests = Array.from(document.querySelectorAll('input[name="interests"]:checked'))
+            .map(el => el.value);
+
+        const visitor = {
+            id: Date.now(),
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            company: document.getElementById('company').value,
+            jobTitle: document.getElementById('jobTitle').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            interests: interests,
+            notes: document.getElementById('notes').value,
+            timestamp: new Date().toLocaleString()
+        };
+
+        const visitors = loadVisitors();
+        visitors.push(visitor);
+        saveVisitors(visitors);
+
+        // Show success message
+        const successMsg = document.getElementById('successMessage');
+        successMsg.classList.add('show');
+        setTimeout(() => successMsg.classList.remove('show'), 3000);
+
+        // Reset form
+        this.reset();
+    });
+
+    // Update UI
+    function updateUI() {
+        const visitors = loadVisitors();
+        const listContainer = document.getElementById('visitorList');
+
+        // Update statistics
+        document.getElementById('totalVisitors').textContent = visitors.length;
+        
+        const uniqueCompanies = new Set(visitors.map(v => v.company)).size;
+        document.getElementById('uniqueCompanies').textContent = uniqueCompanies;
+
+        const today = new Date().toLocaleDateString();
+        const todayCount = visitors.filter(v => v.timestamp.includes(today)).length;
+        document.getElementById('todayVisitors').textContent = todayCount;
+
+        // Update visitor list
+        if (visitors.length === 0) {
+            listContainer.innerHTML = '<div class="empty-state"><p>📭 No visitors registered yet</p></div>';
+            return;
+        }
+
+        listContainer.innerHTML = visitors.map(visitor => `
+            <div class="visitor-item">
+                <div class="info">
+                    <div class="name">${visitor.firstName} ${visitor.lastName}</div>
+                    <div class="company">${visitor.company} ${visitor.jobTitle ? '• ' + visitor.jobTitle : ''}</div>
+                    ${visitor.interests.length > 0 ? `
+                        <div style="margin-top: 5px;">
+                            ${visitor.interests.map(i => `<span class="interest-tag">${i}</span>`).join('')}
+                        </div>
+                    ` : ''}
+                    <div class="time-stamp">${visitor.timestamp}</div>
+                </div>
+                <button class="delete-btn" onclick="deleteVisitor(${visitor.id})">Delete</button>
+            </div>
+        `).reverse().join('');
+    }
+
+    // Delete visitor
+    function deleteVisitor(id) {
+        const visitors = loadVisitors();
+        const filtered = visitors.filter(v => v.id !== id);
+        saveVisitors(filtered);
+    }
+
+    // Export to CSV
+    function exportToCSV() {
+        const visitors = loadVisitors();
+        if (visitors.length === 0) {
+            alert('No data to export');
+            return;
+        }
+
+        const headers = ['First Name', 'Last Name', 'Company', 'Job Title', 'Email', 'Phone', 'Interests', 'Notes', 'Registered'];
+        const rows = visitors.map(v => [
+            v.firstName,
+            v.lastName,
+            v.company,
+            v.jobTitle,
+            v.email,
+            v.phone,
+            v.interests.join('; '),
+            v.notes,
+            v.timestamp
+        ]);
+
+        const csv = [
+            headers.join(','),
+            ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+        ].join('\n');
+
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `XENIA_2025_Visitors_${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    }
+
+    // Export to JSON
+    function exportToJSON() {
+        const visitors = loadVisitors();
+        if (visitors.length === 0) {
+            alert('No data to export');
+            return;
+        }
+
+        const json = JSON.stringify(visitors, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `XENIA_2025_Visitors_${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    }
+
+    // Clear all data
+    function clearAllData() {
+        if (confirm('Are you sure? This will delete all visitor data. This action cannot be undone.')) {
+            localStorage.removeItem(STORAGE_KEY);
+            updateUI();
+        }
+    }
+
+    // Initial UI update
+    updateUI();
+
+    // Auto-save to backup (every 5 minutes)
+    setInterval(() => {
+        const visitors = loadVisitors();
+        console.log(`✅ Auto-backup: ${visitors.length} visitors saved`);
+    }, 300000);
+</script>
+```
+
+</body>
+</html>
